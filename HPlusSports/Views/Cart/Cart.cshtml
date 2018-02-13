@@ -1,0 +1,110 @@
+﻿@model HPlusSports.Models.ShoppingCart
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="row">
+
+    <h2>My Cart</h2>
+
+    <div>
+        <hr />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-md-1">
+                    </th>
+                    <th class="col-md-6">
+                        Product
+                    </th>
+                    <th class="col-md-1">
+                        Quantity
+                    </th>
+                    <th class="col-md-2">
+                        Price
+                    </th>
+                    <th class="col-md-2">
+                        Subtotal
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("Remove", "Cart", new { id = item.Id })">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Product", "Products", new { id = item.SKU })">
+                                <img class="img-thumbnail" src="@Url.Action("Product", "Images", new { id = item.SKU })" />
+                                <span>@item.Name</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Add", "Cart", new { item.SKU, quantity = -1 })">
+                                <i class="glyphicon glyphicon-minus"></i>
+                            </a>
+                            @item.Quantity
+                            <a href="@Url.Action("Add", "Cart", new { item.SKU })">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </a>
+                        </td>
+                        <td>
+                            @item.Price.ToString("C")
+                        </td>
+                        <td>
+                            @item.Total.ToString("C")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4" class="text-right">
+                        Subtotal
+                    </th>
+                    <th>
+                        @Model.Subtotal.ToString("C")
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-right">
+                        Tax
+                    </td>
+                    <td>
+                        @Model.Tax.ToString("C")
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-right">
+                        Shipping
+                    </td>
+                    <td>
+                        @Model.Shipping.ToString("C")
+                    </td>
+                </tr>
+                <tr class="text-primary">
+                    <th colspan="4" class="text-right">
+                        Total
+                    </th>
+                    <th>
+                        @Model.Total.ToString("C")
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
