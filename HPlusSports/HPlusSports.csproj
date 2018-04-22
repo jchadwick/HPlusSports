@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -244,7 +245,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cart\Cart.cshtml" />
-    <Content Include="Views\Products\Category.cshtml" />
+    <Content Include="Views\Products\ProductList.cshtml" />
     <Content Include="Views\Products\Product.cshtml" />
     <Content Include="Views\Cart\EmptyCart.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />

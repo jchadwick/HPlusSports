@@ -1,83 +1,99 @@
 ﻿@model HPlusSports.Models.Product
 
 @{
-    ViewBag.Title = Model.Name;
+  ViewBag.Title = Model.Name;
 }
 
 <h2>@ViewBag.Title</h2>
 
 <div>
-    <hr />
-    <img class="pull-left" src="@Url.Action("Product", "Images", new { id = Model.SKU })" />
+  <hr />
+  <img class="pull-left" src="@Url.Action("Product", "Images", new { id = Model.SKU })" />
 
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.Key)
-        </dt>
+  <dl class="dl-horizontal">
+    <dt>
+      @Html.DisplayNameFor(model => model.Category.Key)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Category.Key)
-        </dd>
+    <dd>
+      @Html.DisplayFor(model => model.Category.Key)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SKU)
-        </dt>
+    <dt>
+      @Html.DisplayNameFor(model => model.SKU)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SKU)
-        </dd>
+    <dd>
+      @Html.DisplayFor(model => model.SKU)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <dt>
+      @Html.DisplayNameFor(model => model.Name)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    <dd>
+      @Html.DisplayFor(model => model.Name)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Summary)
-        </dt>
+    <dt>
+      @Html.DisplayNameFor(model => model.Summary)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Summary)
-        </dd>
+    <dd>
+      @Html.DisplayFor(model => model.Summary)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+    <dt>
+      @Html.DisplayNameFor(model => model.Description)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+    <dd>
+      @Html.DisplayFor(model => model.Description)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MSRP)
-        </dt>
+    <dt>
+      @Html.DisplayNameFor(model => model.MSRP)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MSRP)
-        </dd>
+    <dd>
+      @Html.DisplayFor(model => model.MSRP)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+    <dt>
+      @Html.DisplayNameFor(model => model.Price)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+    <dd>
+      @Html.DisplayFor(model => model.Price)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
+    <dt>
+      Rating
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
+    <dd>
+      @{ 
+        var rating = (double?)ViewData["Rating"];
+      }
+      @if (rating == null)
+      {
+        <span class="rating label label-info"><em>No Rating</em></span>
+      }
+      else
+      {
+        <span class="rating label label-info" title="@rating.Value.ToString("N1")">
+          @for (var i = 1; i <= 5; i++)
+          {
+            var starClass = (rating >= i) ? "star" : "star-empty";
+            <span class="glyphicon glyphicon-@starClass"></span>
+          }
+        </span>
+      }
+    </dd>
 
-    </dl>
+  </dl>
 
-    @Html.ActionLink("Add to Cart", "Add", "Cart", new { Model.SKU }, null)
+  @Html.ActionLink("Add to Cart", "Add", "Cart", new { Model.SKU }, null)
 
 
 </div>

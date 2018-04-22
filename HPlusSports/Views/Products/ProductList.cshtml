@@ -1,0 +1,64 @@
+﻿@using HPlusSports.Models
+@model IEnumerable<HPlusSports.Models.Product>
+
+@{
+  var category = (Category)ViewData["Category"];
+  ViewBag.Title = category.Name;
+
+  var Ratings = (IDictionary<string, double?>)ViewData["Ratings"];
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+
+  @foreach (var item in Model)
+  {
+    var discount = (item.MSRP - item.Price) / item.MSRP;
+    var isDiscounted = discount > 0;
+    var rating = Ratings[item.SKU];
+
+    <div class="col-md-3 text-center">
+      <p>
+        <a href="@Url.Action("Product", "Products", new { id = item.SKU })">
+          <img class="img-thumbnail" src="@Url.Action("Product", "Images", new { id = item.SKU })" />
+          <span>@item.Name</span>
+        </a>
+      </p>
+      <p>
+        @if (rating == null)
+        {
+          <span class="rating label label-info"><em>No Rating</em></span>
+        }
+        else
+        {
+          <span class="rating label label-info" title="@rating.Value.ToString("N1")">
+            @for (var i = 1; i <= 5; i++)
+            {
+              var starClass = (rating >= i) ? "star" : "star-empty";
+              <span class="glyphicon glyphicon-@starClass"></span>
+            }
+          </span>
+        }
+      </p>
+      <p>
+        @Html.DisplayFor(modelItem => item.Summary)
+      </p>
+      <p>
+        @Html.DisplayFor(modelItem => item.MSRP) -
+        @Html.DisplayFor(modelItem => item.Price)
+
+        @if (isDiscounted)
+        {
+          <span class="label label-primary">
+            @discount.ToString("P0") off!
+          </span>
+        }
+      </p>
+      <p>
+        @Html.ActionLink("Add to Cart", "Add", "Cart", new { item.SKU }, null)
+      </p>
+    </div>
+  }
+
+</div>

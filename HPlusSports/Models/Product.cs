@@ -34,9 +34,6 @@ namespace HPlusSports.Models
         [Range(minimum: 0, maximum: double.MaxValue)]
         public double Price { get; set; }
 
-        [Range(minimum: 1, maximum: 5)]
-        public float? Rating { get; set; }
-
         [NotMapped]
         public string[] Tags
         {
