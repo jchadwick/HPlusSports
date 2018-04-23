@@ -23,40 +23,35 @@ namespace HPlusSports.Models
     {
     }
 
-    public Product FindProductBySku(string sku)
+    public Product FindProductBySku(string sku) 
+      => Products.FirstOrDefault(x => x.SKU == sku);
+
+    public ProductRating GetProductRating(string sku)
     {
-      return Products.FirstOrDefault(x => x.SKU == sku);
+      var reviews = Reviews.Where(x => x.SKU == sku);
+
+      return new ProductRating
+      {
+        SKU = sku,
+        Rating = reviews.Average(x => x.Rating),
+        ReviewCount = reviews.Count(),
+      };
     }
 
-    public double? GetProductRating(string sku)
-    {
-      return Reviews
-        .Where(x => x.ProductSku == sku)
-        .Average(x => x.Rating);
-    }
-
-    public IDictionary<string, double?> GetProductRatings(IEnumerable<string> skus)
+    public IQueryable<ProductRating> GetProductRatings(IEnumerable<string> skus)
     {
       var uniqueSkus = skus.Distinct().ToArray();
 
-      var ratings = 
+      return
         Reviews
-          .Where(x => uniqueSkus.Contains(x.ProductSku))
-          .GroupBy(x => x.ProductSku)
-          .ToDictionary(
-            x => x.Key,
-            x => (double?)x.Average(y => y.Rating)
-          );
-
-      var missingRatings =
-        uniqueSkus
-          .Except(ratings.Keys)
-          .Select(sku => new KeyValuePair<string, double?>(sku, null));
-
-      return 
-        ratings
-          .Concat(missingRatings)
-          .ToDictionary(x => x.Key, x => x.Value);
+          .Where(x => uniqueSkus.Contains(x.SKU))
+          .GroupBy(x => x.SKU)
+          .Select(reviews => new ProductRating
+          {
+            SKU = reviews.Key,
+            Rating = reviews.Average(x => x.Rating),
+            ReviewCount = reviews.Count(),
+          });
     }
   }
 }

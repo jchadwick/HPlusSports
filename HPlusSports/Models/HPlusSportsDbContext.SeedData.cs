@@ -108,7 +108,7 @@ namespace HPlusSports
         .Select(i =>
           new Review
           {
-            ProductSku = product.SKU,
+            SKU = product.SKU,
             UserId = UserIds[Random.Next(0, UserIds.Count)],
             Rating = Random.Next(3, 5),
           });

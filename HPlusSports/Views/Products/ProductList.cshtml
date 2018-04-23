@@ -5,7 +5,7 @@
   var category = (Category)ViewData["Category"];
   ViewBag.Title = category.Name;
 
-  var Ratings = (IDictionary<string, double?>)ViewData["Ratings"];
+  var Ratings = (IEnumerable<ProductRating>)ViewData["Ratings"];
 }
 
 <h2>@ViewBag.Title</h2>
@@ -15,48 +15,46 @@
   @foreach (var item in Model)
   {
     var discount = (item.MSRP - item.Price) / item.MSRP;
-    var isDiscounted = discount > 0;
-    var rating = Ratings[item.SKU];
+    var rating = Ratings.FirstOrDefault(x => x.SKU == item.SKU);
 
-    <div class="col-md-3 text-center">
+    <div class="product-summary col-md-3 text-center">
       <p>
         <a href="@Url.Action("Product", "Products", new { id = item.SKU })">
           <img class="img-thumbnail" src="@Url.Action("Product", "Images", new { id = item.SKU })" />
-          <span>@item.Name</span>
+          <span class="name">@item.Name</span>
         </a>
       </p>
       <p>
-        @if (rating == null)
+        <span class="price">@Html.DisplayFor(modelItem => item.Price)</span>
+        <s class="text-muted">@Html.DisplayFor(modelItem => item.MSRP)</s>
+        @if (discount > .05)
         {
-          <span class="rating label label-info"><em>No Rating</em></span>
-        }
-        else
-        {
-          <span class="rating label label-info" title="@rating.Value.ToString("N1")">
-            @for (var i = 1; i <= 5; i++)
-            {
-              var starClass = (rating >= i) ? "star" : "star-empty";
-              <span class="glyphicon glyphicon-@starClass"></span>
-            }
-          </span>
-        }
-      </p>
-      <p>
-        @Html.DisplayFor(modelItem => item.Summary)
-      </p>
-      <p>
-        @Html.DisplayFor(modelItem => item.MSRP) -
-        @Html.DisplayFor(modelItem => item.Price)
-
-        @if (isDiscounted)
-        {
-          <span class="label label-primary">
+          <span class="discount label label-primary">
             @discount.ToString("P0") off!
           </span>
         }
       </p>
       <p>
-        @Html.ActionLink("Add to Cart", "Add", "Cart", new { item.SKU }, null)
+        @if (rating == null || rating.ReviewCount == 0)
+        {
+          <span><em>No Rating</em></span>
+        }
+        else
+        {
+          <span title="@rating.Rating.GetValueOrDefault().ToString("N1")">
+            @for (var i = 1; i <= 5; i++)
+            {
+              var starClass = (rating.Rating >= i) ? "star" : "star-empty";
+              <span class="rating-star glyphicon glyphicon-@starClass"></span>
+            }
+          </span>
+          <span>(@rating.ReviewCount)</span>
+        }
+      </p>
+      <p>
+        <a class="btn btn-sm btn-warning" href="@Url.Action("Add", "Cart", new { item.SKU })">
+          Add To Cart
+        </a>
       </p>
     </div>
   }

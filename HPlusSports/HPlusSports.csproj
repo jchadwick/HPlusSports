@@ -192,6 +192,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\ProductRating.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\HPlusSportsDbContext.cs" />
     <Compile Include="Models\HPlusSportsDbContext.SeedData.cs" />

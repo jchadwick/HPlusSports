@@ -59,3 +59,32 @@ textarea {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
 }
+
+.rating-star {
+  color: #f9db2c;
+  font-weight: bold;
+}
+
+.cart .product-image {
+  width: 8em;
+  height: 8em;
+}
+
+.product-summary {
+  margin-bottom: 1em;
+}
+
+  .product-summary .name {
+    font-size: 120%;
+    font-weight: bold;
+  }
+
+  .product .price,
+  .product-summary .price {
+    font-size: 130%;
+  }
+
+
+.product .buy-button {
+  margin-top: 1em;
+}

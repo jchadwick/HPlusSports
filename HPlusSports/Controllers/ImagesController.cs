@@ -45,7 +45,7 @@ namespace HPlusSports.Controllers
             return Image(imageId);
         }
 
-        internal ActionResult Image(long? id)
+        public ActionResult Image(long? id)
         {
             var image = _context.Images.FirstOrDefault(x => x.Id == id);
 
