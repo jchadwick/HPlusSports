@@ -1,11 +1,14 @@
-﻿using HPlusSports.Models;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using HPlusSports.Models;
 
 namespace HPlusSports.Controllers
 {
   public class ProductsController : Controller
   {
+    public const int DefaultPageSize = 8;
+
     private readonly HPlusSportsDbContext _context;
 
     public ProductsController()
@@ -18,57 +21,69 @@ namespace HPlusSports.Controllers
       _context = context;
     }
 
-    public ActionResult Index(int page = 0, int count = 25)
+    public ActionResult Index(int? page = null, int? count = null)
     {
-      var products =
-          _context.Products
-              .OrderBy(x => x.Name)
-              .Skip(page * count)
-              .Take(count);
-
-      var skus = products.Select(x => x.SKU);
-      var ratings = _context.GetProductRatings(skus);
-
-      ViewData["Ratings"] = ratings;
-      ViewData["Category"] = "All Products";
-
-      return View("ProductList", products);
+      return Category(null, page, count);
     }
 
-    public ActionResult Category(string id, int page = 0, int count = 25)
+    public ActionResult Category(string id, int? page = null, int? count = null)
     {
       var category = _context.Categories.FirstOrDefault(x => x.Key == id);
 
-      if (category == null)
-        return HttpNotFound();
+      IQueryable<Product> products = _context.Products;
 
-      var products =
-          _context.Products
-              .Where(x => x.CategoryId == category.Id)
-              .OrderBy(x => x.Name)
-              .Skip(page * count)
-              .Take(count);
+      if(category == null)
+      {
+        products =
+          products
+            .OrderBy(x => x.Category.Key)
+            .ThenBy(x => x.Name);
+      } else
+      {
+        products = 
+          products
+            .Where(x => x.CategoryId == category.Id)
+            .OrderBy(x => x.Name);
+      }
 
       var skus = products.Select(x => x.SKU);
       var ratings = _context.GetProductRatings(skus);
 
       ViewData["Ratings"] = ratings;
-      ViewData["Category"] = category;
+      ViewData["Category"] = category ?? new Category { Name = "All Categories" };
+
+      /**** Paging Logic ****/
+      var pageSize = count.GetValueOrDefault(DefaultPageSize);
+      var currentPage = page.GetValueOrDefault(1);
+      var resultsCount = products.Count();
+      var pageCount = resultsCount / pageSize + (resultsCount % pageSize > 0 ? 1 : 0);
+      var previousPage = (currentPage - 1 > 0) ? currentPage - 1 : (int?)null;
+      var nextPage = (currentPage + 1 <= pageCount) ? currentPage + 1 : (int?)null;
+
+      products = products
+        .Skip((currentPage - 1) * pageSize)
+        .Take(pageSize);
+
+      ViewData["PageSize"] = pageSize;
+      ViewData["ResultsCount"] = resultsCount;
+      ViewData["CurrentPage"] = currentPage;
+      ViewData["PageCount"] = pageCount;
+      ViewData["PreviousPage"] = previousPage;
+      ViewData["NextPage"] = nextPage;
+
+      /**** End Paging Logic ****/
 
       return View("ProductList", products);
     }
 
     public ActionResult Product(string id)
     {
-      var product =
-          _context.Products
-              .Include("Category") // For use below
-              .FirstOrDefault(x => x.SKU == id);
+      var product = _context.FindProductBySku(id);
 
       if (product == null)
         return HttpNotFound();
 
-      var images =
+      var imageIds =
           product
             .Images
               .Select(img => img.Id)
@@ -76,7 +91,7 @@ namespace HPlusSports.Controllers
 
       ViewData["Rating"] = _context.GetProductRating(product.SKU);
       ViewData["Category"] = product.Category;
-      ViewData["Images"] = images;
+      ViewData["Images"] = imageIds;
 
       return View(product);
     }
