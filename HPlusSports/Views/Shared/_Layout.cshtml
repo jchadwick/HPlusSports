@@ -7,8 +7,8 @@
   @Styles.Render("~/Content/css")
   @Scripts.Render("~/bundles/modernizr")
   <style>
-    #login-buttons .btn {
-      margin-top: 15px;
+    .navbar-nav .btn {
+      margin-top: 1em;
     }
   </style>
 </head>
@@ -26,6 +26,15 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav"></ul>
         <ul class="nav navbar-nav pull-right">
+          <li class="dropdown">
+            @if (User.IsInRole(HPlusSports.Models.UserRoles.Admin))
+            {
+              <a class="dropbtn" href="@Url.Action("Index", "ManageProducts")">
+                <i class="glyphicon glyphicon-list-alt"></i>
+                Admin
+              </a>
+            }
+          </li>
           <li class="dropdown">
             @{
               var cart = HPlusSports.Application.Cart;
@@ -82,7 +91,7 @@
 
             </div>
           </li>
-          <li id="login-buttons">
+          <li>
             @if (User.Identity.IsAuthenticated)
             {
               <form method="post" action="@Url.Action("Logoff", "Account", new { area = "" })">

@@ -108,7 +108,6 @@ namespace HPlusSports
         }
 
         #region DEMO CODE - Do not use in your real site!
-        const string AdminRole = "admin";
         const string AdminEmailAddress = "admin@hplussports.com";
 
         static volatile bool Initialized = false;
@@ -117,10 +116,10 @@ namespace HPlusSports
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
-            if(!roleManager.RoleExists(AdminRole))
+            if(!roleManager.RoleExists(UserRoles.Admin))
             {
                 Console.Out.Write($"User {AdminEmailAddress} doesn't exist - creating... ");
-                var result = roleManager.Create(new IdentityRole(AdminRole));
+                var result = roleManager.Create(new IdentityRole(UserRoles.Admin));
 
                 if (result.Succeeded)
                 {
@@ -142,7 +141,7 @@ namespace HPlusSports
                 var result = userManager.Create(adminUser, "password");
                 if (result.Succeeded)
                 {
-                    userManager.AddToRole(adminUser.Id, AdminRole);
+                    userManager.AddToRole(adminUser.Id, UserRoles.Admin);
                     Console.Out.WriteLine("done.");
                 }
                 else

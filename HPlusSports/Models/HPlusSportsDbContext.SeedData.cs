@@ -19,7 +19,7 @@ namespace HPlusSports
   {
     static readonly Random Random = new Random(1);
 
-    public const string TestUserId = "testuser";
+    public const string TestUserId = "demo@hplussports.com";
 
     static readonly IList<string> UserIds =
       Enumerable.Range(0, 10)
@@ -78,6 +78,8 @@ namespace HPlusSports
             Summary = description,
             MSRP = ToPrice(msrpPerCapsule * count),
             Price = ToPrice(pricePerCapsule * count),
+            LastUpdated = DateTime.Now,
+            LastUpdatedUserId = TestUserId,
           }
       );
     }
@@ -97,6 +99,8 @@ namespace HPlusSports
         Summary = description,
         MSRP = ToPrice(msrp),
         Price = ToPrice(msrp - discount),
+        LastUpdated = DateTime.Now,
+        LastUpdatedUserId = TestUserId,
       };
 
       return product;

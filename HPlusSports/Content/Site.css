@@ -56,8 +56,8 @@ textarea {
     display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
+.nav.navbar-nav .btn {
+  margin-top: 15px;
 }
 
 .rating-star {
