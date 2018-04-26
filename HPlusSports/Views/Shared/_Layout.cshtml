@@ -6,11 +6,6 @@
   <title>@ViewBag.Title - My ASP.NET Application</title>
   @Styles.Render("~/Content/css")
   @Scripts.Render("~/bundles/modernizr")
-  <style>
-    .navbar-nav .btn {
-      margin-top: 1em;
-    }
-  </style>
 </head>
 <body>
   <div class="navbar navbar-inverse navbar-fixed-top">
@@ -116,7 +111,11 @@
 
   @Scripts.Render("~/bundles/jquery")
   @Scripts.Render("~/bundles/bootstrap")
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.30.1/js/jquery.tablesorter.min.js"></script>
   <script type="text/javascript" src="~/Scripts/MvcPager.js"></script>
   @RenderSection("scripts", required: false)
+  <script type="text/javascript" async>
+    $($('table.tablesorter').tablesorter())
+  </script>
 </body>
 </html>
