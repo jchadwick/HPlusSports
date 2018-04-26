@@ -51,9 +51,23 @@ textarea {
     margin:0;
 }
 
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+.text-large {
+  font-size: 130%;
+}
+
+.text-middle,
+.text-middle td {
+  vertical-align: middle !important;
+}
+
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
-    display: block;
+  display: block;
 }
 
 .nav.navbar-nav .btn {

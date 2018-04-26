@@ -46,39 +46,46 @@
             </a>
             <div class="dropdown-content">
 
-              <table class="table table-condensed">
-                @foreach (var item in cart.Items)
-                {
-                  <tr style="vertical-align: middle">
-                    <td>
-                      <a href="@Url.Action("Remove", "Cart", new { id = item.Id })">
-                        <i class="glyphicon glyphicon-remove"></i>
-                      </a>
-                    </td>
-                    <td>
-                      <img width="50" height="50" src="@Url.Action("Product", "Images", new { id = item.SKU })" alt="">
-                    </td>
-                    <td>
-                      <a href="@Url.Action("Product", "Products", new { id = item.SKU })">
-                        @item.Name
-                      </a>
-                    </td>
-                    <td class="text-right">
-                      @item.Quantity
-                      x
-                      @item.Price.ToString("C")
-                    </td>
+              @if (cart.Items.Count == 0)
+              {
+                <p>Your shopping cart is empty - keep shopping!</p>
+              }
+              else
+              {
+                <table class="table table-condensed">
+                  @foreach (var item in cart.Items)
+                  {
+                    <tr class="text-middle">
+                      <td>
+                        <a href="@Url.Action("Remove", "Cart", new { id = item.Id })">
+                          <i class="glyphicon glyphicon-remove  text-danger"></i>
+                        </a>
+                      </td>
+                      <td>
+                        <img width="50" height="50" src="@Url.Action("Product", "Images", new { id = item.SKU })" alt="">
+                      </td>
+                      <td>
+                        <a href="@Url.Action("Product", "Products", new { id = item.SKU })">
+                          @item.Name
+                        </a>
+                      </td>
+                      <td class="text-right">
+                        @item.Quantity
+                        x
+                        @item.Price.ToString("C")
+                      </td>
+                    </tr>
+                  }
+                  <tr>
+                    <th colspan="3" class="text-right">
+                      Subtotal:
+                    </th>
+                    <th class="text-right">
+                      @cart.Subtotal.ToString("C")
+                    </th>
                   </tr>
-                }
-                <tr>
-                  <th colspan="3" class="text-right">
-                    Subtotal:
-                  </th>
-                  <th class="text-right">
-                    @cart.Subtotal.ToString("C")
-                  </th>
-                </tr>
-              </table>
+                </table>
+              }
 
               <p class="buttons text-right" ">
                 <a href="@Url.Action("Index", "Cart")" class="btn btn-primary">View Cart</a>
