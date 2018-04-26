@@ -29,9 +29,9 @@
           <li class="dropdown">
             @if (User.IsInRole(HPlusSports.Models.UserRoles.Admin))
             {
-              <a class="dropbtn" href="@Url.Action("Index", "ManageProducts")">
+              <a class="dropbtn" href="@Url.Action("Index", "Inventory")">
                 <i class="glyphicon glyphicon-list-alt"></i>
-                Admin
+                Inventory
               </a>
             }
           </li>
@@ -88,7 +88,6 @@
               <p class="buttons text-right" ">
                 <a href="@Url.Action("Index", "Cart")" class="btn btn-primary">View Cart</a>
               </p>
-
             </div>
           </li>
           <li>
@@ -112,8 +111,7 @@
   </div>
   <div class="container body-content">
     @RenderBody()
-    <footer>
-    </footer>
+    <footer></footer>
   </div>
 
   @Scripts.Render("~/bundles/jquery")

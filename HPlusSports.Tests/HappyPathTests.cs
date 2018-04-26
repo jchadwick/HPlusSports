@@ -2,7 +2,6 @@
 using HPlusSports.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 using System.Web.Mvc;
 using Xunit;
 
@@ -14,6 +13,7 @@ namespace HPlusSports.Tests
         private const string TestUserId = SeedData.TestUserId;
 
         private HPlusSportsDbContext _context;
+        private HomeController homeController;
         private ProductsController productsController;
         private CartController cartController;
 
@@ -27,7 +27,7 @@ namespace HPlusSports.Tests
         public void CanBrowseTheSiteAndAddAndRemoveProductsInTheCart()
         {
             // View the product categories
-            var indexResult = productsController.Index();
+            var indexResult = homeController.Index();
             var categories = (indexResult as ViewResult)?.Model as IDictionary<Category, int>;
             Assert.Equal(
                 _context.Categories.Count(),
@@ -35,11 +35,12 @@ namespace HPlusSports.Tests
             );
 
             // Pick a category
+            const int expectedProducts = 10;
             var categoryKey = categories.Last().Key.Key;
-            var categoryResult = productsController.Category(categoryKey);
+            var categoryResult = productsController.Category(categoryKey, count: expectedProducts);
             var products = (categoryResult as ViewResult)?.Model as IEnumerable<Product>;
             Assert.Equal(
-                _context.Products.Count(x => x.Category.Key == categoryKey),
+                expectedProducts,
                 products?.Count()
             );
 
@@ -97,6 +98,8 @@ namespace HPlusSports.Tests
         private void ResetContext()
         {
             _context = CreateContext();
+
+            homeController = new HomeController(_context);
 
             productsController = new ProductsController(_context);
 

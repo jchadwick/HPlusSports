@@ -8,16 +8,16 @@ using System.Web.Mvc;
 namespace HPlusSports.Controllers
 {
   [Authorize(Roles = UserRoles.Admin)]
-  public class ManageProductsController : Controller
+  public class InventoryController : Controller
   {
     private HPlusSportsDbContext _context;
 
-    public ManageProductsController()
+    public InventoryController()
       : this(new HPlusSportsDbContext())
     {
     }
 
-    public ManageProductsController(HPlusSportsDbContext context)
+    public InventoryController(HPlusSportsDbContext context)
     {
       _context = context;
     }

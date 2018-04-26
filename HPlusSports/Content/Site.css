@@ -66,8 +66,9 @@ textarea {
 }
 
 .cart .product-image {
-  width: 8em;
-  height: 8em;
+    width: 5em;
+    height: 5em;
+    margin-right: 1em;
 }
 
 .product-summary {
