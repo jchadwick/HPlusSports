@@ -27,12 +27,12 @@ namespace HPlusSports.Models
     [DataType(DataType.MultilineText)]
     public string Description { get; set; }
 
-    [DataType(DataType.Currency)]
     [Range(minimum: 0, maximum: double.MaxValue)]
+    [DataType(DataType.Currency)]
     public double MSRP { get; set; }
 
-    [DataType(DataType.Currency)]
     [Range(minimum: 0, maximum: double.MaxValue)]
+    [DataType(DataType.Currency)]
     public double Price { get; set; }
 
     [Required]
