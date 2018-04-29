@@ -122,7 +122,9 @@
   <script type="text/javascript" src="~/Scripts/MvcPager.js"></script>
   @RenderSection("scripts", required: false)
   <script type="text/javascript" async>
-    $($('table.tablesorter').tablesorter())
+    $(function () {
+      $('table.tablesorter').tablesorter()
+    })
   </script>
 </body>
 </html>
