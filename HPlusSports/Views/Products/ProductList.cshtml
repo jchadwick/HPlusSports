@@ -1,4 +1,4 @@
-﻿@using HPlusSports.Models
+﻿                                                                                                                                                                                 @using HPlusSports.Models
 @model IEnumerable<HPlusSports.Models.Product>
 
 @{
@@ -14,23 +14,23 @@
 
   <div class="row">
 
-    @foreach (var item in Model)
+    @foreach (var product in Model)
     {
-      var discount = (item.MSRP - item.Price) / item.MSRP;
-      var rating = Ratings.FirstOrDefault(x => x.SKU == item.SKU);
+      var discount = (product.MSRP - product.Price) / product.MSRP;
+      var rating = Ratings.FirstOrDefault(x => x.SKU == product.SKU);
 
       <div class="product-summary col-md-3 text-center">
         <p>
-          <a href="@Url.Action("Product", "Products", new { id = item.SKU })">
-            <img class="product-image img-thumbnail" src="@Url.Action("Product", "Images", new { id = item.SKU })" />
-            <span class="name">@item.Name</span>
+          <a href="@Url.Action("Product", "Products", new { id = product.SKU })">
+            <img class="product-image img-thumbnail" src="@Url.Action("Product", "Images", new { id = product.SKU })" />
+            <span class="name">@product.Name</span>
           </a>
         </p>
         <p>
-          <span class="price">@Html.DisplayFor(modelItem => item.Price)</span>
-          <s class="text-muted">@Html.DisplayFor(modelItem => item.MSRP)</s>
+          <span class="price">@Html.DisplayFor(x => product.Price)</span>
+          <s class="text-muted">@Html.DisplayFor(x => product.MSRP)</s>
           @if (discount > .05)
-        {
+          {
             <span class="discount label label-primary">
               @discount.ToString("P0") off!
             </span>
@@ -38,7 +38,7 @@
         </p>
         <p>
           @if (rating == null || rating.ReviewCount == 0)
-        {
+          {
             <span><em>No Rating</em></span>
           }
           else
@@ -54,7 +54,7 @@
           }
         </p>
         <p>
-          <a class="btn btn-sm btn-warning" href="@Url.Action("Add", "Cart", new { item.SKU })">
+          <a class="btn btn-sm btn-warning" href="@Url.Action("Add", "Cart", new { product.SKU })">
             Add To Cart
           </a>
         </p>
