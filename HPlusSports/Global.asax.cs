@@ -15,8 +15,9 @@ namespace HPlusSports
       {
         var context = new HPlusSportsDbContext();
         var userId = HttpContext.Current.User.Identity.Name;
-        var cart = context.ShoppingCarts.FirstOrDefault(x => x.UserId == userId);
-        return cart ?? new ShoppingCart { UserId = userId };
+        var cart = context.ShoppingCarts.FirstOrDefault(x => x.UserId == userId)
+                   ?? new ShoppingCart { UserId = userId };
+        return cart;
       }
     }
 
