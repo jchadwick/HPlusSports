@@ -33,7 +33,7 @@ namespace HPlusSports.Models
       return new ProductRating
       {
         SKU = sku,
-        Rating = reviews.Average(x => x.Rating),
+        Rating = reviews.Average(x => (double?)x.Rating),
         ReviewCount = reviews.Count(),
       };
     }
