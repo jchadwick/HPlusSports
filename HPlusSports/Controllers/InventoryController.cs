@@ -90,6 +90,8 @@ namespace HPlusSports.Controllers
         );
       }
 
+      var hasPriceChanged = existing.Price != product.Price;
+
       existing.CategoryId = product.CategoryId;
       existing.Description = product.Description;
       existing.MSRP = product.MSRP;
@@ -101,6 +103,26 @@ namespace HPlusSports.Controllers
 
       existing.LastUpdated = DateTime.UtcNow;
       existing.LastUpdatedUserId = GetUserId(this);
+
+      _context.SaveChanges();
+
+      if (hasPriceChanged)
+      {
+        var cartsToUpdate =
+          _context.ShoppingCarts
+            .Include("Items")
+            .Where(cart => cart.Items.Any(x => x.SKU == product.SKU));
+
+        foreach (var cart in cartsToUpdate)
+        {
+          foreach (var cartItem in cart.Items.Where(x => x.SKU == product.SKU))
+          {
+            cartItem.Price = product.Price;
+          }
+
+          cart.Recalculate();
+        }
+      }
 
       _context.SaveChanges();
 

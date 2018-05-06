@@ -120,8 +120,7 @@ namespace HPlusSports.Controllers
                 _context.SaveChanges();
             }
 
-            cart.Shipping = cart.Subtotal * 0.1;
-            cart.Tax = cart.Subtotal * 0.7;
+            cart.Recalculate();
 
             return cart;
         }

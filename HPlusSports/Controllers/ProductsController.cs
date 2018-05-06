@@ -53,14 +53,15 @@ namespace HPlusSports.Controllers
       ViewData["Category"] = category ?? new Category { Name = "All Categories" };
 
       /**** Paging Logic ****/
-      var resultsCount = products.Count();
+      var model = products;
+      var resultsCount = model.Count();
       var pageSize = count.GetValueOrDefault(DefaultPageSize);
       var currentPage = page.GetValueOrDefault(1);
       var pageCount = resultsCount / pageSize + (resultsCount % pageSize > 0 ? 1 : 0);
       var previousPage = (currentPage - 1 > 0) ? currentPage - 1 : (int?)null;
       var nextPage = (currentPage + 1 <= pageCount) ? currentPage + 1 : (int?)null;
 
-      products = products
+      model = model
         .Skip((currentPage - 1) * pageSize)
         .Take(pageSize);
 
@@ -73,7 +74,7 @@ namespace HPlusSports.Controllers
 
       /**** End Paging Logic ****/
 
-      return View("ProductList", products);
+      return View("ProductList", model);
     }
 
     public ActionResult Product(string id)
