@@ -20,12 +20,12 @@
       var rating = Ratings.FirstOrDefault(x => x.SKU == product.SKU);
 
       <div class="product-summary col-md-3 text-center">
-        <p>
+        <h4>
           <a href="@Url.Action("Product", "Products", new { id = product.SKU })">
             <img class="product-image img-thumbnail" src="@Url.Action("Product", "Images", new { id = product.SKU })" />
             <span class="name">@product.Name</span>
           </a>
-        </p>
+        </h4>
         <p>
           <span class="price">@Html.DisplayFor(x => product.Price)</span>
           <s class="text-muted">@Html.DisplayFor(x => product.MSRP)</s>

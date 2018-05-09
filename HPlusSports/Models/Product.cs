@@ -10,7 +10,7 @@ namespace HPlusSports.Models
   {
     public long Id { get; set; }
 
-    [Range(1, long.MaxValue)]
+    [Required]
     public long CategoryId { get; set; }
 
     [Required]
@@ -54,6 +54,9 @@ namespace HPlusSports.Models
     internal string _tags = string.Empty;
 
     public virtual Category Category { get; set; }
+
+    public long? ThumbnailImageId { get; set; }
+    public virtual Image ThumbnailImage { get; set; }
 
     public virtual ICollection<Image> Images { get; private set; }
 

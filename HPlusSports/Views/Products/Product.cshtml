@@ -11,18 +11,19 @@
       @foreach (var image in Model.Images)
       {
         <li class="list-group-item">
-          <img class="img-thumbnail"
+          <img class="img img-thumbnail"
                src="@Url.Action("Image", "Images", new { id = image.Id })" />
         </li>
       }
     </ul>
   </div>
 
-  <div class="col-md-3">
-    <img src="@Url.Action("Product", "Images", new { id = Model.SKU })" />
+  <div class="col-md-4">
+    <img class="img img-thumbnail" 
+         src="@Url.Action("Product", "Images", new { id = Model.SKU })" />
   </div>
 
-  <div class="col-md-8">
+  <div class="col-md-7">
 
     <h2>@ViewBag.Title</h2>
 

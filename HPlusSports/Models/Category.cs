@@ -4,7 +4,6 @@ namespace HPlusSports.Models
 {
     public class Category
     {
-        [Range(1, long.MaxValue)]
         public long Id { get; set; }
 
         [Required]
