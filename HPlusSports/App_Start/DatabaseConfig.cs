@@ -1,7 +1,7 @@
 ﻿using HPlusSports.Models;
 using System.Data.Entity;
 
-namespace HPlusSports
+namespace HPlusSports.App_Start
 {
   public class DatabaseConfig
   {

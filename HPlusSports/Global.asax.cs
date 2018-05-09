@@ -1,13 +1,14 @@
-﻿using HPlusSports.Models;
-using System.Linq;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using HPlusSports.App_Start;
+using HPlusSports.Models;
 
 namespace HPlusSports
 {
-  public class Application : System.Web.HttpApplication
+  public class Application : HttpApplication
   {
     public static ShoppingCart Cart
     {
