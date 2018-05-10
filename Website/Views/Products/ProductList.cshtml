@@ -14,7 +14,7 @@
 
     @foreach (var product in Model)
     {
-      var discount = (product.MSRP - product.Price) / product.MSRP;
+      var discount = (product.MSRP - product.Pric) / product.MSRP;
       var rating = Ratings.FirstOrDefault(x => x.SKU == product.SKU);
 
       <div class="product-summary col-md-3 text-center">
