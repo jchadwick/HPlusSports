@@ -40,11 +40,9 @@ namespace HPlusSports.Models
 
     public IQueryable<ProductRating> GetProductRatings(IEnumerable<string> skus)
     {
-      var uniqueSkus = skus.Distinct().ToArray();
-
       return
         Reviews
-          .Where(x => uniqueSkus.Contains(x.SKU))
+          .Where(x => skus.Distinct().Contains(x.SKU))
           .GroupBy(x => x.SKU)
           .Select(reviews => new ProductRating
           {

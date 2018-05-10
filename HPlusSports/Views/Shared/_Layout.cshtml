@@ -11,7 +11,7 @@
   <link rel="icon" href="https://hplussport.com/wp-content/uploads/2015/12/cropped-HSport_01-32x32.png" sizes="32x32">
 </head>
 <body>
-  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -19,10 +19,14 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        @Html.ActionLink("HPlus Sports", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <a href="~/" class="navbar-brand">
+          <img src="~/Content/logo.png" />
+        </a>
+      </div>
+      <div class="col-md-7 text-center title navbar-header">
+        <h1>@ViewData["Title"]</h1>
       </div>
       <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav"></ul>
         <ul class="nav navbar-nav pull-right">
           <li class="dropdown">
             @if (User.IsInRole(HPlusSports.Models.UserRoles.Admin))
@@ -61,7 +65,7 @@
                     <tr class="text-middle">
                       <td>
                         <a href="@Url.Action("Remove", "Cart", new { id = item.Id })">
-                          <i class="glyphicon glyphicon-remove  text-danger"></i>
+                          <i class="glyphicon glyphicon-remove text-danger"></i>
                         </a>
                       </td>
                       <td>
@@ -91,7 +95,7 @@
               }
 
               <p class="buttons text-right" ">
-                <a href="@Url.Action("Index", "Cart")" class="btn btn-primary">View Cart</a>
+                <a href="@Url.Action("Index", "Cart")" class="btn btn-default">View Cart</a>
               </p>
             </div>
           </li>
@@ -100,13 +104,13 @@
             {
               <form method="post" action="@Url.Action("Logoff", "Account", new { area = "" })">
                 @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-xs btn-default">Logout</button>
+                <button type="submit" class="btn btn-default">Logout</button>
               </form>
             }
             else
             {
               <div>
-                <a href="@Url.Action("Login", "Account")" class="btn btn-xs btn-primary">Login</a>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-default">Login</a>
               </div>
             }
           </li>

@@ -97,7 +97,6 @@ namespace HPlusSports.Controllers
       existing.Price = product.Price;
       existing.SKU = product.SKU;
       existing.Summary = product.Summary;
-      existing.Tags = product.Tags;
 
       existing.LastUpdated = DateTime.UtcNow;
       existing.LastUpdatedUserId = GetUserId(this);

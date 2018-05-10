@@ -6,7 +6,6 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using HPlusSports.Models;
-using System.Text.RegularExpressions;
 
 namespace HPlusSports
 {
@@ -33,61 +32,52 @@ namespace HPlusSports
 
     public void Populate(HPlusSportsDbContext context)
     {
-      var set = new XmlReaderSettings
-      {
-        ConformanceLevel = ConformanceLevel.Fragment
-      };
+      var doc = ReadTestData();
+      Populate(context, doc);
+    }
 
-      using (var stream = typeof(SeedData).Assembly.GetManifestResourceStream("HPlusSports.App_Data.TestData.xml"))
-      using (var reader = new StreamReader(stream))
-      {
-        var doc = XDocument.Parse(reader.ReadToEnd());
+    internal void Populate(HPlusSportsDbContext context, XDocument doc)
+    {
+      var categories = doc.Descendants("Categories").Descendants("Category")
+        .Select(x => new Category
+        {
+          Key = ToKey(x.Element("Name").Value),
+          Name = x.Element("Name").Value,
+          Image = new Image { Url = x.Element("ImageUrl").Value },
+        })
+        .ToArray();
 
-        Func<string, string> ToKey = x =>
-          x.Replace(" ", "-").Replace("--", "-").Replace("--", "-").ToLowerInvariant();
+      context.Images.AddRange(categories.Select(x => x.Image));
+      context.SaveChanges();
 
-        var categories = doc.Descendants("Categories").Descendants("Category")
-          .Select(x => new Category {
-            Key = ToKey(x.Element("Name").Value),
-            Name = x.Element("Name").Value,
-            Image = new Image { Url = x.Element("ImageUrl").Value },
-          })
-          .ToArray();
+      context.Categories.AddRange(categories);
+      context.SaveChanges();
 
-        context.Images.AddRange(categories.Select(x => x.Image));
-        context.SaveChanges();
-
-        context.Categories.AddRange(categories);
-        context.SaveChanges();
-
-
-        var products = doc.Descendants("Product")
-          .Select(x =>
+      var products = doc.Descendants("Product")
+        .Select(x =>
+        {
+          var product = new Product
           {
-            var product = new Product
-            {
-              CategoryId = categories.First(cat => cat.Name == x.Element("Category").Value).Id,
-              Name = x.Element("Name").Value,
-              Description = x.Element("Description").Value,
-              MSRP = double.Parse(x.Element("MSRP").Value),
-              Price = double.Parse(x.Element("Price").Value),
-              SKU = x.Element("SKU").Value,
-              Summary = x.Element("Summary").Value,
-              _tags = x.Element("_tags").Value,
-              LastUpdated = DateTime.UtcNow,
-              LastUpdatedUserId = "admin@hplussports.com",
-              ThumbnailImage = new Image { Url = x.Element("ThumbnailImageUrl").Value },
-            };
+            CategoryId = categories.First(cat => cat.Name == x.Element("Category").Value).Id,
+            Name = x.Element("Name").Value,
+            Description = x.Element("Description").Value,
+            MSRP = double.Parse(x.Element("MSRP").Value),
+            Price = double.Parse(x.Element("Price").Value),
+            SKU = x.Element("SKU").Value,
+            Summary = x.Element("Summary").Value,
+            LastUpdated = DateTime.UtcNow,
+            LastUpdatedUserId = "admin@hplussports.com",
+            ThumbnailImage = new Image { Url = x.Element("ThumbnailImageUrl").Value },
+          };
 
-            product.Images.Add(new Image { Url = x.Element("ImageUrl").Value });
+          product.Images.Add(new Image { Url = x.Element("ImageUrl").Value });
 
-            return product;
-          })
-          .ToArray();
+          return product;
+        })
+        .ToArray();
 
-        context.Products.AddRange(products);
-        context.SaveChanges();
-      }
+      context.Products.AddRange(products);
+      context.SaveChanges();
 
       var reviews = context.Products.SelectMany(GenerateReviews);
       context.Reviews.AddRange(reviews);
@@ -104,6 +94,29 @@ namespace HPlusSports
             UserId = UserIds[Random.Next(0, UserIds.Count)],
             Rating = Random.Next(3, 5),
           });
+    }
+
+    private static string ToKey(string val)
+    {
+      return val
+        .Replace(" ", "-")
+        .Replace("--", "-")
+        .Replace("--", "-")
+        .ToLowerInvariant();
+    }
+
+    private static XDocument ReadTestData()
+    {
+      var set = new XmlReaderSettings
+      {
+        ConformanceLevel = ConformanceLevel.Fragment
+      };
+
+      using (var stream = typeof(SeedData).Assembly.GetManifestResourceStream("HPlusSports.App_Data.TestData.xml"))
+      using (var reader = new StreamReader(stream))
+      {
+        return XDocument.Parse(reader.ReadToEnd());
+      }
     }
   }
 }

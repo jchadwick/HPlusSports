@@ -35,7 +35,7 @@ namespace HPlusSports.Controllers
       {
         products =
           products
-            .OrderBy(x => x.Category.Key)
+            .OrderBy(x => x.CategoryId)
             .ThenBy(x => x.Name);
       } else
       {

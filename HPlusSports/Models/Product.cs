@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace HPlusSports.Models
 {
@@ -44,15 +43,6 @@ namespace HPlusSports.Models
     public string LastUpdatedUserId { get; set; }
 
     [NotMapped]
-    public string[] Tags
-    {
-      get { return _tags.Split(';'); }
-      set { _tags = string.Join(";", value ?? Enumerable.Empty<string>()); }
-    }
-
-    [Column("Tags")]
-    internal string _tags = string.Empty;
-
     public virtual Category Category { get; set; }
 
     public long? ThumbnailImageId { get; set; }

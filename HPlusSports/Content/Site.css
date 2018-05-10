@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -17,21 +16,64 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
 
-  h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  a, a:visited, a:hover {
     color: #c0af00;
-  }  
+  }
 
-/* Set padding to keep content from hitting the edges */
+.btn {
+  font-weight: bold
+}
+
+    .btn-warning, a:visited.btn-warning, a.btn-warning, a:hover.btn-warning {
+      color: #ffffff;
+    }
+
+  .navbar {
+    clear: both;
+  }
+
+.navbar-nav {
+  padding-top: 2em;
+}
+
+.well-lg {
+  font-size: 120%;
+}
+
+.dropbtn.nav-cart {
+  font-size: 20px;
+}
+
+.title h1 {
+  font-weight: bold;
+  padding-top: 1em;
+}
+
 #main {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.category {
+  height: 370px;
+}
+.category h3 {
+  margin-top: .5em;
+}
+.category img {
+  width: 20em;
+}
+
+.pager a {
+  font-weight: bold;
+  font-size: 110%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
-    white-space: normal;
+  white-space: normal;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
