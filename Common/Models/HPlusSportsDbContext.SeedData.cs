@@ -9,7 +9,7 @@ using HPlusSports.Models;
 
 namespace HPlusSports
 {
-  internal class HPlusSportsDbContextInitializer
+  public class HPlusSportsDbContextInitializer
       : DropCreateDatabaseAlways<HPlusSportsDbContext>
   {
     protected override void Seed(HPlusSportsDbContext context)
@@ -112,7 +112,7 @@ namespace HPlusSports
         ConformanceLevel = ConformanceLevel.Fragment
       };
 
-      using (var stream = typeof(SeedData).Assembly.GetManifestResourceStream("HPlusSports.App_Data.TestData.xml"))
+      using (var stream = typeof(SeedData).Assembly.GetManifestResourceStream("HPlusSports.TestData.xml"))
       using (var reader = new StreamReader(stream))
       {
         return XDocument.Parse(reader.ReadToEnd());
