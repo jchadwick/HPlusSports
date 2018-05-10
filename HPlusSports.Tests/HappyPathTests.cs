@@ -35,7 +35,7 @@ namespace HPlusSports.Tests
             );
 
             // Pick a category
-            const int expectedProducts = 10;
+            const int expectedProducts = 4;
             var categoryKey = categories.Last().Key.Key;
             var categoryResult = productsController.Category(categoryKey, count: expectedProducts);
             var products = (categoryResult as ViewResult)?.Model as IEnumerable<Product>;
