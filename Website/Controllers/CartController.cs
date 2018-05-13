@@ -24,7 +24,7 @@ namespace HPlusSports.Controllers
         {
             var cart = GetCart();
 
-            if(cart.Items.Any())
+            if (cart.Items.Any())
                 return View("Cart", cart);
 
             return View("EmptyCart");
@@ -38,7 +38,7 @@ namespace HPlusSports.Controllers
 
             var item = cart.Items.FirstOrDefault(x => x.SKU == sku);
 
-            if(item == null)
+            if (item == null)
             {
                 item = new ShoppingCartItem
                 {
@@ -56,7 +56,7 @@ namespace HPlusSports.Controllers
                 item.Quantity += quantity;
             }
 
-            if(item.Quantity <= 0)
+            if (item.Quantity <= 0)
             {
                 cart.Items.Remove(item);
             }

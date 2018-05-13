@@ -116,7 +116,7 @@ namespace HPlusSports
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
-            if(!roleManager.RoleExists(UserRoles.Admin))
+            if (!roleManager.RoleExists(UserRoles.Admin))
             {
                 Console.Out.Write($"User {AdminEmailAddress} doesn't exist - creating... ");
                 var result = roleManager.Create(new IdentityRole(UserRoles.Admin));

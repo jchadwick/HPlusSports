@@ -1,28 +1,28 @@
 ﻿@model IEnumerable<HPlusSports.Models.Product>
 
 @{
-  ViewBag.Title = "Inventory";
+    ViewBag.Title = "Inventory";
 }
 
 @if (TempData["SuccessMessage"] != null)
 {
-  <div class="alert alert-error alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    @TempData["SuccessMessage"]
-  </div>
+    <div class="alert alert-error alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      @TempData["SuccessMessage"]
+    </div>
 }
 else if (TempData["ErrorMessage"] != null)
 {
-  <div class="alert alert-error alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    @TempData["ErrorMessage"]
-  </div>
+    <div class="alert alert-error alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      @TempData["ErrorMessage"]
+    </div>
 }
 
-    <h2>
-      @ViewBag.Title
-      <a class="btn btn-primary btn-sm pull-right" href="@Url.Action("Create")">Add Product</a>
-    </h2>
+<h2>
+  @ViewBag.Title
+  <a class="btn btn-primary btn-sm pull-right" href="@Url.Action("Create")">Add Product</a>
+</h2>
 
 <table class="table tablesorter">
   <thead>
@@ -51,43 +51,43 @@ else if (TempData["ErrorMessage"] != null)
   <tbody>
     @foreach (var item in Model)
     {
-      <tr>
-        <td>
-          @Html.DisplayFor(modelItem => item.Category.Name)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.SKU)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.Price)
-          <span class="clearfix text-muted">
-            @Html.DisplayFor(modelItem => item.MSRP)
-          </span>
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-          <span class="text-muted">
-            <span title="@item.LastUpdated.ToString()">
-              @item.LastUpdated.ToShortDateString()
+        <tr>
+          <td>
+            @Html.DisplayFor(modelItem => item.Category.Name)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.SKU)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Name)
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Price)
+            <span class="clearfix text-muted">
+              @Html.DisplayFor(modelItem => item.MSRP)
             </span>
-            by
-            @item.LastUpdatedUserId
-          </span>
-        </td>
-        <td>
-          <a href="@Url.Action("Update", new { id = item.Id })">
-            <i class="glyphicon glyphicon-pencil text-info"></i>
-          </a>
-          <a href="@Url.Action("Delete", new { id = item.Id })">
-            <i class="glyphicon glyphicon-remove text-danger"></i>
-          </a>
-        </td>
-      </tr>
+          </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.Description)
+          </td>
+          <td>
+            <span class="text-muted">
+              <span title="@item.LastUpdated.ToString()">
+                @item.LastUpdated.ToShortDateString()
+              </span>
+              by
+              @item.LastUpdatedUserId
+            </span>
+          </td>
+          <td>
+            <a href="@Url.Action("Update", new { id = item.Id })">
+              <i class="glyphicon glyphicon-pencil text-info"></i>
+            </a>
+            <a href="@Url.Action("Delete", new { id = item.Id })">
+              <i class="glyphicon glyphicon-remove text-danger"></i>
+            </a>
+          </td>
+        </tr>
     }
   </tbody>
 </table>

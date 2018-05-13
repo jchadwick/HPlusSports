@@ -8,27 +8,27 @@ using HPlusSports.Models;
 
 namespace HPlusSports
 {
-  public class Application : HttpApplication
-  {
-    public static ShoppingCart Cart
+    public class Application : HttpApplication
     {
-      get
-      {
-        var context = new HPlusSportsDbContext();
-        var userId = HttpContext.Current.User.Identity.Name;
-        var cart = context.ShoppingCarts.FirstOrDefault(x => x.UserId == userId)
-                   ?? new ShoppingCart { UserId = userId };
-        return cart;
-      }
-    }
+        public static ShoppingCart Cart
+        {
+            get
+            {
+                var context = new HPlusSportsDbContext();
+                var userId = HttpContext.Current.User.Identity.Name;
+                var cart = context.ShoppingCarts.FirstOrDefault(x => x.UserId == userId)
+                           ?? new ShoppingCart { UserId = userId };
+                return cart;
+            }
+        }
 
-    protected void Application_Start()
-    {
-      DatabaseConfig.Initialize();
-      AreaRegistration.RegisterAllAreas();
-      FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-      RouteConfig.RegisterRoutes(RouteTable.Routes);
-      BundleConfig.RegisterBundles(BundleTable.Bundles);
+        protected void Application_Start()
+        {
+            DatabaseConfig.Initialize();
+            AreaRegistration.RegisterAllAreas();
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
     }
-  }
 }
